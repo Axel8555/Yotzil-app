@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Yótzil</string>
+    <string name="title_activity_home">Home</string>
+    <string name="tab_text_1">Estado Actual</string>
+    <string name="tab_text_2">Historial</string>
+    <string name="title_activity_ajustes">ajustes</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Historial</string>
+    <string name="sync_header">Notificaciones</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Mensaje personalzado</string>
+    <string name="reply_title">Replicar acción</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sincronizaer email</string>
+    <string name="attachment_title">Notificaciones</string>
+    <string name="attachment_summary_on">Activadas</string>
+    <string name="attachment_summary_off">Desactivadas</string>
+</resources>
