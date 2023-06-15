@@ -1,154 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D6B8F3"
-    tools:context=".Actualizar">
+    android:background="#D6B8F3">
 
-    <TextView
-        android:id="@+id/textViewa"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="serif"
-        android:text="Edita tu cuenta"
-        android:textColor="#EB323F68"
-        android:textSize="34sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="32dp"
+        tools:context=".Actualizar">
 
-    <EditText
-        android:id="@+id/namea"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="casual"
-        android:hint="Nombre Completo"
-        android:selectAllOnFocus="true"
-        android:singleLine="false"
-        android:textColor="#35294A"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewa" />
-
-    <EditText
-        android:id="@+id/usernamea"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="casual"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:singleLine="false"
-        android:textColor="#35294A"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/namea" />
-
-    <EditText
-        android:id="@+id/passworda"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="casual"
-        android:hint="Número"
-        android:inputType="phone"
-        android:selectAllOnFocus="true"
-        android:singleLine="false"
-        android:textColor="#35294A"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernamea" />
-
-    <RadioGroup
-        android:id="@+id/radioGroupa"
-        android:layout_width="131dp"
-        android:layout_height="138dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passworda">
-
-        <RadioButton
-            android:id="@+id/radioButtona"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mujer" />
-
-        <RadioButton
-            android:id="@+id/radioButton4a"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Hombre" />
-
-        <RadioButton
-            android:id="@+id/radioButton3a"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Perzonalizado"
-            tools:ignore="TouchTargetSizeCheck" />
-
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroupa">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+        <TextView
+            android:id="@+id/textViewa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="192dp" />
+            android:layout_marginTop="32dp"
+            android:fontFamily="serif"
+            android:text="Edita tu cuenta"
+            android:textColor="#EB323F68"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/can"
+        <EditText
+            android:id="@+id/namea"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="casual"
+            android:hint="Nombre Completo"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:textColor="#35294A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewa" />
+
+        <EditText
+            android:id="@+id/usernamea"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="casual"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:textColor="#35294A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/namea" />
+
+        <EditText
+            android:id="@+id/passworda"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="casual"
+            android:hint="Número"
+            android:inputType="phone"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:textColor="#35294A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/usernamea" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passworda">
+
+            <RadioButton
+                android:id="@+id/radioButtona"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mujer" />
+
+            <RadioButton
+                android:id="@+id/radioButton4a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hombre" />
+
+            <RadioButton
+                android:id="@+id/radioButton3a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Perzonalizado"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </RadioGroup>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:backgroundTint="#5F4C75"
-            android:text="Cancelar"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupa">
 
-        <Button
-            android:id="@+id/sesiona"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="16dp"
-            android:backgroundTint="#5F4C75"
-            android:text="Actualizar Datos"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/can"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:backgroundTint="#5F4C75"
+                android:text="Cancelar"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
 
+            <Button
+                android:id="@+id/sesiona"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:backgroundTint="#5F4C75"
+                android:text="Actualizar Datos"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

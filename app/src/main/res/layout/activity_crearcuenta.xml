@@ -1,136 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#CBB2EA"
-    tools:context=".crearcuenta">
+    android:background="#D6B8F3">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="Bievenido"
-        android:textColor="#EB323F68"
-        android:textSize="40sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.091" />
+        android:padding="32dp"
+        tools:context=".Actualizar">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="Crea tu cuenta"
-        android:textColor="#EB323F68"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
-
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="370dp"
-        android:layout_height="48dp"
-        android:fontFamily="casual"
-        android:hint="Nombre Completo"
-        android:selectAllOnFocus="true"
-        android:singleLine="false"
-        android:textColor="#35294A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.364" />
-
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="370dp"
-        android:layout_height="48dp"
-        android:fontFamily="casual"
-        android:hint="E-mail"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:singleLine="false"
-        android:textColor="#35294A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="370dp"
-        android:layout_height="48dp"
-        android:fontFamily="casual"
-        android:hint="Contraseña"
-        android:inputType="textEmailAddress"
-        android:selectAllOnFocus="true"
-        android:singleLine="false"
-        android:textColor="#35294A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="131dp"
-        android:layout_height="138dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.162">
-
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mujer" />
+            android:layout_marginTop="32dp"
+            android:fontFamily="serif"
+            android:text="Bievenido"
+            android:textColor="#EB323F68"
+            android:textSize="40sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hombre" />
+            android:layout_marginTop="16dp"
+            android:fontFamily="serif"
+            android:text="Crea tu cuenta"
+            android:textColor="#EB323F68"
+            android:textSize="34sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:text="Perzonalizado"
-            tools:ignore="TouchTargetSizeCheck" />
+            android:layout_marginTop="16dp"
+            android:fontFamily="casual"
+            android:hint="Nombre Completo"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:textColor="#35294A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    </RadioGroup>
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="casual"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:textColor="#35294A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name" />
 
-    <Button
-        android:id="@+id/sesion"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:backgroundTint="#5F4C75"
-        android:text="Registrate"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintVertical_bias="0.128" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="casual"
+            android:hint="Contraseña"
+            android:inputType="textEmailAddress"
+            android:selectAllOnFocus="true"
+            android:singleLine="false"
+            android:textColor="#35294A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/username" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/password">
+
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Mujer" />
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hombre" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="Personalizado"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/sesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#5F4C75"
+            android:text="Registrate"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
