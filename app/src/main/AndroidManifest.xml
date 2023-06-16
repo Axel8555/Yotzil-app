@@ -39,7 +39,7 @@
             android:name=".Actualizar"
             android:exported="false" />
         <activity
-            android:name=".bluethoot"
+            android:name=".BluetoothActivity"
             android:exported="false" />
         <activity
             android:name=".configuracion"

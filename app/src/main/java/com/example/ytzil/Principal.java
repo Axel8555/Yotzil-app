@@ -42,7 +42,7 @@ public class Principal extends AppCompatActivity {
             startActivityForResult(intent, 0);
         });
         bluet.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), bluethoot.class);
+            Intent intent = new Intent(v.getContext(), BluetoothActivity.class);
             startActivityForResult(intent, 0);
         });
         checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
