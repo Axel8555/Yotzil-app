@@ -3,12 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.ytzil">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH" android:required="true"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:required="true"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" android:required="true"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" android:required="true"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:required="true"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:required="true"/>
 
+    <uses-permission android:name="android.permission.LOCAL_MAC_ADDRESS" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
