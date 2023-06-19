@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,48 +16,65 @@ import java.util.Set;
 
 public class BluetoothListHandler {
     private AppCompatActivity activity;
-    private ListView listView;
+    private ListView deviceListView;
     private BluetoothAdapter bluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
     private Map<String, String> deviceMap;
+    private OnDeviceSelectedListener deviceSelectedListener;
 
-    public BluetoothListHandler(AppCompatActivity activity, ListView listView, BluetoothAdapter bluetoothAdapter) {
+    public BluetoothListHandler(AppCompatActivity activity, ListView deviceListView, BluetoothAdapter bluetoothAdapter) {
         this.activity = activity;
-        this.listView = listView;
+        this.deviceListView = deviceListView;
         this.bluetoothAdapter = bluetoothAdapter;
+        this.deviceSelectedListener = null;
+    }
+
+    public void setOnDeviceSelectedListener(OnDeviceSelectedListener listener) {
+        this.deviceSelectedListener = listener;
     }
 
     public void list() {
         pairedDevices = bluetoothAdapter.getBondedDevices();
-        ArrayList<String> list = new ArrayList<>();
-        deviceMap = new HashMap<>(); // Inicializar el mapa
+        List<String> deviceList = new ArrayList<>();
+        deviceMap = new HashMap<>(pairedDevices.size());
 
-        for (BluetoothDevice bt : pairedDevices) {
-            String deviceName = bt.getName();
-            String deviceAddress = bt.getAddress();
-            list.add(deviceName);
-            deviceMap.put(deviceName, deviceAddress); // Agregar la entrada al mapa (nombre del dispositivo -> dirección MAC)
+        for (BluetoothDevice device : pairedDevices) {
+            String deviceName = device.getName();
+            String deviceAddress = device.getAddress();
+            deviceList.add(deviceName);
+            deviceMap.put(deviceName, deviceAddress);
         }
-        Toast.makeText(activity, "Mostrar dispositivos", Toast.LENGTH_SHORT).show();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            String selectedDeviceAddress = getSelectedDeviceAddress(position);
-            if (selectedDeviceAddress != null) {
-                // Aquí puedes realizar la conexión con el dispositivo seleccionado
-                BluetoothDevice selectedDevice = bluetoothAdapter.getRemoteDevice(selectedDeviceAddress);
-                String selectedDeviceName = selectedDevice.getName();
-                Toast.makeText(activity, "Dispositivo seleccionado: " + selectedDeviceName, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Mostrar dispositivos", Toast.LENGTH_SHORT).show();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_list_item_1, deviceList);
+        deviceListView.setAdapter(adapter);
+
+        deviceListView.setOnItemClickListener((parent, view, position, id) -> {
+            String selectedDeviceAddress = getDeviceAddressAtPosition(position);
+            if (selectedDeviceAddress != null && deviceSelectedListener != null) {
+                connectToDevice(selectedDeviceAddress);
             }
         });
     }
 
-    public String getSelectedDeviceAddress(int position) {
+    private void connectToDevice(String deviceAddress) {
+        BluetoothDevice selectedDevice = bluetoothAdapter.getRemoteDevice(deviceAddress);
+        String selectedDeviceName = selectedDevice.getName();
+        // Aquí puedes realizar la conexión con el dispositivo seleccionado
+        // ...
+        //Toast.makeText(activity, "Dispositivo seleccionado: " + selectedDeviceName, Toast.LENGTH_SHORT).show();
+        deviceSelectedListener.onDeviceSelected(selectedDeviceName);
+    }
+
+    public String getDeviceAddressAtPosition(int position) {
         BluetoothDevice[] devices = pairedDevices.toArray(new BluetoothDevice[0]);
         if (position >= 0 && position < devices.length) {
             return devices[position].getAddress();
         }
         return null;
+    }
+
+    public interface OnDeviceSelectedListener {
+        void onDeviceSelected(String deviceName);
     }
 }

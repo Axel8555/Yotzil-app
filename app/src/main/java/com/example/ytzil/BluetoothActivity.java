@@ -11,11 +11,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-public class BluetoothActivity extends AppCompatActivity {
-    private CheckBox enable, visible;
-    private Button atras, buscar;
+public class BluetoothActivity extends AppCompatActivity implements BluetoothListHandler.OnDeviceSelectedListener {
+    private CheckBox enable;
+    private CheckBox visible;
+    private Button atras;
+    private Button buscar;
     private ListView listabh;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothPermissionHandler permissionHandler;
@@ -35,6 +36,7 @@ public class BluetoothActivity extends AppCompatActivity {
 
         permissionHandler = new BluetoothPermissionHandler(this, bluetoothAdapter);
         listHandler = new BluetoothListHandler(this, listabh, bluetoothAdapter);
+        listHandler.setOnDeviceSelectedListener(this);
 
         if (bluetoothAdapter.isEnabled()) {
             enable.setChecked(true);
@@ -79,5 +81,11 @@ public class BluetoothActivity extends AppCompatActivity {
         visible = findViewById(R.id.vis);
         listabh = findViewById(R.id.listab);
         buscar = findViewById(R.id.buscar);
+    }
+
+    @Override
+    public void onDeviceSelected(String deviceName) {
+        // Imprimir el nombre del dispositivo seleccionado
+        Toast.makeText(this, "Dispositivo seleccionado: " + deviceName, Toast.LENGTH_SHORT).show();
     }
 }
