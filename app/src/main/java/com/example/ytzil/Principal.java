@@ -77,8 +77,8 @@ public class Principal extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                int progress = seekBar.getProgress();
-                sendExtraValue(progress - 20);
+                int progress = (seekBar.getProgress()-seekBar.getMax()/2)*10;
+                sendExtraValue(progress);
             }
         });
 
