@@ -100,7 +100,7 @@ public class Principal extends AppCompatActivity {
         ritmo = findViewById(R.id.textView5);
         ritmo.setText("00");
         linea = findViewById(R.id.textView4);
-        linea.setBackgroundColor(getResources().getColor(R.color.gris));
+        linea.setBackgroundColor(getResources().getColor(R.color.verde));
         seekExtra = findViewById(R.id.seekBar);
         vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         handler = new Handler();
@@ -148,9 +148,11 @@ public class Principal extends AppCompatActivity {
                             if (pulso > 120 && !isVibrating) {
                                 startVibration();
                                 startHeartbeatAnimation(250); // Duración de la animación: 250 ms
+                                linea.setBackgroundColor(getResources().getColor(R.color.rojo));
                             } else if (pulso <= 120 && isVibrating) {
                                 stopVibration();
                                 startHeartbeatAnimation(500); // Duración de la animación: 500 ms
+                                linea.setBackgroundColor(getResources().getColor(R.color.verde));
                             }
                         }
                     });
