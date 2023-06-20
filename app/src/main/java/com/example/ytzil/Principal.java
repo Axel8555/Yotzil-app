@@ -1,32 +1,46 @@
 package com.example.ytzil;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.handshake.ServerHandshake;
 
 import java.io.OutputStreamWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Date;
 
 public class Principal extends AppCompatActivity {
     private TextView ritmo, linea;
-    private boolean enc = false, ele = false;
-    int i=0, ale=0;
-    String[][] matriz;
-    Button conf, his, play;
+    private boolean enc = false;
+    Button conf, his;
     FloatingActionButton bluet;
-    CheckBox checkbox;
+    SeekBar seekExtra;
+    private WebSocketClient webSocketClient;
+    private boolean isVibrating = false;
+    private Vibrator vibrator;
+    private Handler handler;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,133 +59,169 @@ public class Principal extends AppCompatActivity {
             Intent intent = new Intent(v.getContext(), BluetoothActivity.class);
             startActivityForResult(intent, 0);
         });
-        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        seekExtra.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked){
-                    guardar();
-                    ele=false;
-                }
-                else{
-                    guardar();
-                    ele = true;
-                    vibrar();
-                }
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // No se requiere ninguna acción al cambiar el progreso del seekbar
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // No se requiere ninguna acción al iniciar el seguimiento del seekbar
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                sendExtraValue(progress - 20);
             }
         });
+
+        connectWebSocket();
     }
 
-    private void init(){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopVibration();
+    }
+
+    private void init() {
         conf = findViewById(R.id.config);
         his = findViewById(R.id.hist);
         bluet = findViewById(R.id.bluet);
-        play = findViewById(R.id.button2);
-        play.setText("Empezar");
         ritmo = findViewById(R.id.textView5);
         ritmo.setText("00");
         linea = findViewById(R.id.textView4);
         linea.setBackgroundColor(getResources().getColor(R.color.gris));
-        checkbox = findViewById(R.id.ele);
-        matriz = new String[7][3];
-        matriz[0][0]="78";
-        matriz[0][1]="79";
-        matriz[0][2]="80";
-        matriz[1][0]="80";
-        matriz[1][1]="81";
-        matriz[1][2]="82";
-        matriz[2][0]="82";
-        matriz[2][1]="83";
-        matriz[2][2]="84";
-        matriz[3][0]="84";
-        matriz[3][1]="85";
-        matriz[3][2]="86";
-        matriz[4][0]="86";
-        matriz[4][1]="87";
-        matriz[4][2]="88";
-        matriz[5][0]="88";
-        matriz[5][1]="89";
-        matriz[5][2]="90";
-        matriz[6][0]="80";
-        matriz[6][1]="81";
-        matriz[6][2]="82";
+        seekExtra = findViewById(R.id.seekBar);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        handler = new Handler();
     }
 
-    public void OnClickStart(View view){
-        if(enc) {
-            guardar();
-            enc = false;
-            linea.setBackgroundColor(getResources().getColor(R.color.gris));
-            ritmo.setText("00");
-            play.setText("Empezar");
+    private void connectWebSocket() {
+        URI uri;
+        try {
+            uri = new URI("ws://52.71.18.223:3003"); // Reemplaza con la dirección IP y el puerto correctos
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return;
         }
-        else {
-            enc = true;
-            play.setText("Detener");
-            ale = (int) (Math.random()*6);
-        }
-        contador();
-    }
 
-    private void contador(){
-        new Thread(new Runnable() {
+        webSocketClient = new WebSocketClient(uri) {
             @Override
-            public void run() {
-                while(enc){
-                    if (ele){
-                        ritmo.setText("120");
-                        linea.setBackgroundColor(getResources().getColor(R.color.rojo));
+            public void onOpen(ServerHandshake handshakedata) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Principal.this, "Conexión exitosa", Toast.LENGTH_SHORT).show();
                     }
-                    else {
-                        linea.setBackgroundColor(getResources().getColor(R.color.verde));
-                        i = (int) (Math.random() * 3);
-                        ritmo.setText(matriz[ale][i]);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                });
+            }
+
+            @Override
+            public void onMessage(String message) {
+                try {
+                    String data = "";
+                    for (int i = 0; i < message.length(); i++) {
+                        if ((int) message.charAt(i) != 10) {
+                            data = data + message.charAt(i);
+                        } else {
+                            break;
                         }
                     }
+                    int pulso = Integer.parseInt(data);
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ritmo.setText(String.valueOf(pulso));
+                            guardar(pulso);
+
+                            if (pulso > 120 && !isVibrating) {
+                                startVibration();
+                            } else if (pulso <= 120 && isVibrating) {
+                                stopVibration();
+                            }
+                        }
+                    });
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
                 }
             }
-        }).start();
-    }
 
-    private void vibrar(){
-        new Thread(new Runnable() {
             @Override
-            public void run() {
-                for(int j=0;j<3;j++){
-                    Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(1000);
-                    try {
-                        Thread.sleep(3*1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+            public void onClose(int code, String reason, boolean remote) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Principal.this, "Conexión cerrada: " + reason, Toast.LENGTH_SHORT).show();
                     }
-                }
+                });
             }
-        }).start();
+
+            @Override
+            public void onError(Exception ex) {
+                ex.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Principal.this, "Error de conexión: " + ex.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        webSocketClient.connect();
     }
 
-    private void guardar(){
+    private void guardar(int pulso) {
         String prom, edo;
         String reg = new Date().toString();
-        if (ele){
-            prom = "120";
-            edo = "En riesgo";
-        }
-        else{
-            prom = matriz[ale][1];
-            edo = "Bueno";
-        }
-        try{
+        prom = String.valueOf(pulso);
+        edo = (pulso > 120) ? "En Riesgo" : "Bueno";
+
+        try {
             OutputStreamWriter fout = new OutputStreamWriter(openFileOutput("historial", Context.MODE_APPEND));
             fout.write("Fecha y hora del registro: " + reg + "\t Promedio de Ppm: " + prom + "\t Estado: " + edo + " \n");
             fout.close();
-            Toast.makeText(this, "Historial guardado", Toast.LENGTH_SHORT).show();
-        }catch (Exception ex){
-            Log.e("Archivos","Error al alamcenar información");
+            //Toast.makeText(this, "Historial guardado", Toast.LENGTH_SHORT).show();
+        } catch (Exception ex) {
+            Log.e("Archivos", "Error al almacenar información");
         }
     }
 
+    private void startVibration() {
+        isVibrating = true;
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                if (isVibrating) {
+                    if (vibrator.hasVibrator()) {
+                        vibrator.vibrate(1000);
+                    }
+                    handler.postDelayed(this, 2000); // Vibrar durante 1 segundo y luego esperar 1 segundo antes de repetirse
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
+    }
+
+    private void stopVibration() {
+        isVibrating = false;
+        handler.removeCallbacks(runnable);
+        vibrator.cancel();
+    }
+
+    private void showSnackbar(String message) {
+        View parentLayout = findViewById(android.R.id.content);
+        Snackbar.make(parentLayout, message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void sendExtraValue(int value) {
+        if (webSocketClient != null && webSocketClient.isOpen()) {
+            webSocketClient.send(String.valueOf(value));
+        }
+    }
 }

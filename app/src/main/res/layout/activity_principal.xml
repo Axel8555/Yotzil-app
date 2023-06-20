@@ -72,6 +72,7 @@
             app:srcCompat="@drawable/circulo" />
 
         <FrameLayout
+            android:id="@+id/frameCorazon"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
@@ -127,34 +128,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="40"
+            android:progress="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView4" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:onClick="OnClickStart"
-        android:text="a"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/a"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <CheckBox
-        android:id="@+id/ele"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="Ppm Elevado"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.255" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/bluet"

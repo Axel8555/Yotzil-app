@@ -19,7 +19,6 @@ public class BluetoothListHandler {
     private ListView deviceListView;
     private BluetoothAdapter bluetoothAdapter;
     private Set<BluetoothDevice> pairedDevices;
-    private Map<String, String> deviceMap;
     private OnDeviceSelectedListener deviceSelectedListener;
 
     public BluetoothListHandler(AppCompatActivity activity, ListView deviceListView, BluetoothAdapter bluetoothAdapter) {
@@ -36,13 +35,11 @@ public class BluetoothListHandler {
     public void list() {
         pairedDevices = bluetoothAdapter.getBondedDevices();
         List<String> deviceList = new ArrayList<>();
-        deviceMap = new HashMap<>(pairedDevices.size());
 
         for (BluetoothDevice device : pairedDevices) {
             String deviceName = device.getName();
             String deviceAddress = device.getAddress();
             deviceList.add(deviceName);
-            deviceMap.put(deviceName, deviceAddress);
         }
 
         Toast.makeText(activity, "Mostrar dispositivos", Toast.LENGTH_SHORT).show();
@@ -59,7 +56,7 @@ public class BluetoothListHandler {
 
     private void connectToDevice(String deviceAddress) {
         BluetoothDevice selectedDevice = bluetoothAdapter.getRemoteDevice(deviceAddress);
-        String selectedDeviceName = selectedDevice.getName();
+        String selectedDeviceName = selectedDevice.getAddress(); // Cambio aquí para obtener la clave MAC en lugar del nombre
         // Aquí puedes realizar la conexión con el dispositivo seleccionado
         // ...
         //Toast.makeText(activity, "Dispositivo seleccionado: " + selectedDeviceName, Toast.LENGTH_SHORT).show();
@@ -75,6 +72,6 @@ public class BluetoothListHandler {
     }
 
     public interface OnDeviceSelectedListener {
-        void onDeviceSelected(String deviceName);
+        void onDeviceSelected(String deviceAddress); // Cambio aquí para recibir la clave MAC en lugar del nombre
     }
 }
