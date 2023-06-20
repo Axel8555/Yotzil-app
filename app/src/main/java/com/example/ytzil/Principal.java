@@ -1,6 +1,7 @@
 package com.example.ytzil;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +12,7 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,8 @@ public class Principal extends AppCompatActivity {
     private Vibrator vibrator;
     private Handler handler;
     private Runnable runnable;
+    private int initialPadding;
+    private ValueAnimator paddingAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +83,14 @@ public class Principal extends AppCompatActivity {
         });
 
         connectWebSocket();
+        setupHeartbeatAnimation();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         stopVibration();
+        stopHeartbeatAnimation();
     }
 
     private void init() {
@@ -141,8 +147,10 @@ public class Principal extends AppCompatActivity {
 
                             if (pulso > 120 && !isVibrating) {
                                 startVibration();
+                                startHeartbeatAnimation(250); // Duración de la animación: 250 ms
                             } else if (pulso <= 120 && isVibrating) {
                                 stopVibration();
+                                startHeartbeatAnimation(500); // Duración de la animación: 500 ms
                             }
                         }
                     });
@@ -212,6 +220,36 @@ public class Principal extends AppCompatActivity {
         isVibrating = false;
         handler.removeCallbacks(runnable);
         vibrator.cancel();
+    }
+
+    private void setupHeartbeatAnimation() {
+        FrameLayout frameCorazon = findViewById(R.id.frameCorazon);
+        initialPadding = getResources().getDimensionPixelSize(R.dimen.initial_padding);
+        frameCorazon.setPadding(initialPadding, initialPadding, initialPadding, initialPadding);
+
+        paddingAnimator = ValueAnimator.ofInt(initialPadding, 2 * initialPadding);
+        paddingAnimator.setDuration(500);
+        paddingAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        paddingAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        paddingAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedValue = (int) animation.getAnimatedValue();
+                frameCorazon.setPadding(animatedValue, animatedValue, animatedValue, animatedValue);
+            }
+        });
+        paddingAnimator.start();
+    }
+
+    private void startHeartbeatAnimation(int duration) {
+        paddingAnimator.setDuration(duration);
+        paddingAnimator.start();
+    }
+
+    private void stopHeartbeatAnimation() {
+        paddingAnimator.cancel();
+        FrameLayout frameCorazon = findViewById(R.id.frameCorazon);
+        frameCorazon.setPadding(initialPadding, initialPadding, initialPadding, initialPadding);
     }
 
     private void showSnackbar(String message) {
